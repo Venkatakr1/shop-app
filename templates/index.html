@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shop Sales Dashboard</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkblue;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid gray;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Shop Sales Dashboard</h2>
+
+<form method="POST" action="/add">
+
+<input type="text" name="product" placeholder="Product Name" required>
+
+<input type="number" name="quantity" placeholder="Quantity" required>
+
+<input type="number" name="price" placeholder="Price" required>
+
+<button type="submit">Add Sale</button>
+
+</form>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Product</th>
+<th>Quantity</th>
+<th>Price</th>
+<th>Total</th>
+<th>Date</th>
+</tr>
+
+{% for sale in sales %}
+
+<tr>
+<td>{{sale[0]}}</td>
+<td>{{sale[1]}}</td>
+<td>{{sale[2]}}</td>
+<td>{{sale[3]}}</td>
+<td>{{sale[4]}}</td>
+<td>{{sale[5]}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>
