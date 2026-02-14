@@ -1,39 +1,28 @@
-from flask import Flask, render_template, request, redirect
+import os
 import mysql.connector
+from flask import Flask
 
 app = Flask(__name__)
 
-# MySQL connection
+# Railway MySQL connection
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Tangirala@2026",
-    database="shopdb"
+    host=os.getenv("MYSQLHOST"),
+    port=os.getenv("MYSQLPORT"),
+    user=os.getenv("MYSQLUSER"),
+    password=os.getenv("MYSQLPASSWORD"),
+    database=os.getenv("MYSQLDATABASE")
 )
 
-cursor = db.cursor()
+@app.route("/")
+def home():
+    return "Shop app is running successfully 🚀"
 
-@app.route('/')
-def index():
-    cursor.execute("SELECT * FROM sales ORDER BY id DESC")
-    data = cursor.fetchall()
-    return render_template("index.html", sales=data)
-
-@app.route('/add', methods=['POST'])
-def add_sale():
-    product = request.form['product']
-    quantity = int(request.form['quantity'])
-    price = float(request.form['price'])
-
-    total = quantity * price
-
-    query = "INSERT INTO sales (product, quantity, price, total) VALUES (%s, %s, %s, %s)"
-    values = (product, quantity, price, total)
-
-    cursor.execute(query, values)
-    db.commit()
-
-    return redirect('/')
+@app.route("/testdb")
+def testdb():
+    cursor = db.cursor()
+    cursor.execute("SELECT DATABASE();")
+    result = cursor.fetchone()
+    return f"Connected to database: {result}"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
