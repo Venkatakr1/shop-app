@@ -4,30 +4,27 @@ from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
-# Railway or Local connection
-if "MYSQLHOST" in os.environ:
-    conn = mysql.connector.connect(
+def get_connection():
+    return mysql.connector.connect(
         host=os.environ.get("MYSQLHOST"),
         user=os.environ.get("MYSQLUSER"),
         password=os.environ.get("MYSQLPASSWORD"),
         database=os.environ.get("MYSQLDATABASE"),
         port=int(os.environ.get("MYSQLPORT"))
     )
-else:
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Tangirala@2026",
-        database="shopdb"
-    )
-
-cursor = conn.cursor()
 
 
 @app.route("/")
 def home():
-    cursor.execute("SELECT * FROM products")
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, name, price, quantity FROM products")
     products = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
     return render_template("index.html", products=products)
 
 
@@ -37,11 +34,18 @@ def add():
     price = request.form["price"]
     quantity = request.form["quantity"]
 
+    conn = get_connection()
+    cursor = conn.cursor()
+
     cursor.execute(
-        "INSERT INTO products (name, price, quantity) VALUES (%s, %s, %s)",
+        "INSERT INTO products (id, name, price, quantity) VALUES (NULL, %s, %s, %s)",
         (name, price, quantity)
     )
+
     conn.commit()
+
+    cursor.close()
+    conn.close()
 
     return redirect("/")
 
