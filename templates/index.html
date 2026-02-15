@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shop App</title>
+</head>
+<body>
+
+<h2>Add Product</h2>
+
+<form method="POST" action="/add">
+
+    Name:
+    <input type="text" name="name" required>
+    <br><br>
+
+    Price:
+    <input type="number" name="price" required>
+    <br><br>
+
+    Quantity:
+    <input type="number" name="quantity" required>
+    <br><br>
+
+    <button type="submit">Add Product</button>
+
+</form>
+
+
+<h2>Product List</h2>
+
+<table border="1">
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Price</th>
+<th>Quantity</th>
+</tr>
+
+{% for product in products %}
+
+<tr>
+<td>{{ product[0] }}</td>
+<td>{{ product[1] }}</td>
+<td>{{ product[2] }}</td>
+<td>{{ product[3] }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+</body>
+</html>
+
