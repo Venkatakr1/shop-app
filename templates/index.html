@@ -29,28 +29,24 @@
 <h2>Product List</h2>
 
 <table border="1">
-
 <tr>
 <th>ID</th>
 <th>Name</th>
 <th>Price</th>
 <th>Quantity</th>
+<th>Action</th>
 </tr>
 
 {% for product in products %}
-
 <tr>
 <td>{{ product[0] }}</td>
 <td>{{ product[1] }}</td>
 <td>{{ product[2] }}</td>
 <td>{{ product[3] }}</td>
+<td>
+<a href="/delete/{{ product[0] }}">Delete</a>
+</td>
 </tr>
-
 {% endfor %}
 
 </table>
-
-
-</body>
-</html>
-
