@@ -48,6 +48,12 @@ def add():
     conn.close()
 
     return redirect("/")
+@app.route("/delete/<int:id>")
+def delete(id):
+    cursor.execute("DELETE FROM products WHERE id = %s", (id,))
+    conn.commit()
+    return redirect("/")
+
 
 
 if __name__ == "__main__":
