@@ -7,22 +7,11 @@
 
 <h2>Add Product</h2>
 
-<form method="POST" action="/add">
-
-    Name:
-    <input type="text" name="name" required>
-    <br><br>
-
-    Price:
-    <input type="number" name="price" required>
-    <br><br>
-
-    Quantity:
-    <input type="number" name="quantity" required>
-    <br><br>
-
+<form action="/add" method="POST">
+    Name: <input type="text" name="name"><br><br>
+    Price: <input type="number" name="price"><br><br>
+    Quantity: <input type="number" name="quantity"><br><br>
     <button type="submit">Add Product</button>
-
 </form>
 
 
@@ -34,7 +23,6 @@
 <th>Name</th>
 <th>Price</th>
 <th>Quantity</th>
-<th>Action</th>
 </tr>
 
 {% for product in products %}
@@ -43,10 +31,10 @@
 <td>{{ product[1] }}</td>
 <td>{{ product[2] }}</td>
 <td>{{ product[3] }}</td>
-<td>
-<a href="/delete/{{ product[0] }}">Delete</a>
-</td>
 </tr>
 {% endfor %}
 
 </table>
+
+</body>
+</html>
